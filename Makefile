@@ -37,6 +37,9 @@ _all: verify-files check-cluster create-vms prepare-manifests cluster-install up
 	@echo "================================================================================"
 	@$(VERIFY_SCRIPT) verify-deployment
 
+.PHONY: create-base-cluster
+create-base-cluster: verify-files check-cluster create-vms prepare-manifests cluster-install update-etc-hosts kubeconfig
+
 .PHONY: verify-files
 verify-files:
 	@$(UTILS_SCRIPT) verify-files
@@ -443,6 +446,7 @@ help:
 	@echo "Available targets:"
 	@echo "Cluster Management:"
 	@echo "  all               - Complete setup: verify, create cluster, VMs, install, and wait for completion"
+	@echo "  create-base-cluster - Create and install a base OpenShift cluster through kubeconfig"
 	@echo "  create-cluster    - Create a new cluster"
 	@echo "  create-day2-cluster - Create a day2 cluster for worker nodes with DPUs"
 	@echo "  get-day2-iso      - Get ISO URL for worker nodes with DPUs (uses day2 cluster)"
